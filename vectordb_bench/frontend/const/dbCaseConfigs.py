@@ -207,6 +207,48 @@ CaseConfigParamInput_Nprobe = CaseConfigInput(
     == IndexType.IVFFlat.value,
 )
 
+CaseConfigParamInput_Nprobes = CaseConfigInput(
+    label=CaseConfigParamType.Nprobes,
+    inputType=InputType.Number,
+    inputConfig={
+        "min": 1,
+        "max": 65536,
+        "value": 10,
+    },
+)
+
+CaseConfigParamInput_Partitions = CaseConfigInput(
+    label=CaseConfigParamType.Partitions,
+    inputType=InputType.Number,
+    inputConfig={
+        "min": 1,
+        "max": 65536,
+        "value": 256,
+    },
+)
+
+CaseConfigParamInput_Subvectors = CaseConfigInput(
+    label=CaseConfigParamType.Subvectors,
+    inputType=InputType.Number,
+    inputConfig={
+        "min": 1,
+        "max": 65536,
+        "value": 96,
+    },
+)
+
+CaseConfigParamInput_RefineFactor = CaseConfigInput(
+    label=CaseConfigParamType.RefineFactor,
+    inputType=InputType.Number,
+    inputConfig={
+        "min": 0,
+        "max": 65536,
+        "value": 0,
+    },
+)
+
+
+
 CaseConfigParamInput_Lists = CaseConfigInput(
     label=CaseConfigParamType.lists,
     inputType=InputType.Number,
@@ -299,6 +341,11 @@ PgVectoRSPerformanceConfig = [
     CaseConfigParamInput_QuantizationType_PgVectoRS,
     CaseConfigParamInput_QuantizationRatio_PgVectoRS,
 ]
+LanceDBLoadingConfig = [CaseConfigParamInput_Partitions, CaseConfigParamInput_Subvectors, CaseConfigParamInput_Nprobes, CaseConfigParamInput_RefineFactor]
+LanceDBPerformanceConfig = [CaseConfigParamInput_Partitions, CaseConfigParamInput_Subvectors, CaseConfigParamInput_Nprobes, CaseConfigParamInput_RefineFactor]
+
+LanceDBCloudLoadingConfig = [CaseConfigParamInput_Partitions, CaseConfigParamInput_Subvectors, CaseConfigParamInput_Nprobes, CaseConfigParamInput_RefineFactor]
+LanceDBCloudPerformanceConfig = [CaseConfigParamInput_Partitions, CaseConfigParamInput_Subvectors, CaseConfigParamInput_Nprobes, CaseConfigParamInput_RefineFactor]
 
 CASE_CONFIG_MAP = {
     DB.Milvus: {
@@ -385,5 +432,39 @@ CASE_CONFIG_MAP = {
         CaseType.Performance1536D500K1P: PgVectoRSPerformanceConfig,
         CaseType.Performance1536D5M99P: PgVectorPerformanceConfig,
         CaseType.Performance1536D500K99P: PgVectoRSPerformanceConfig,
+    },
+    DB.LanceDB: {
+        CaseType.CapacityDim960: LanceDBLoadingConfig,
+        CaseType.CapacityDim128: LanceDBLoadingConfig,
+        CaseType.Performance100M: LanceDBPerformanceConfig,
+        CaseType.Performance10M: LanceDBPerformanceConfig,
+        CaseType.Performance1M: LanceDBPerformanceConfig,
+        CaseType.Performance10M1P: LanceDBPerformanceConfig,
+        CaseType.Performance1M1P: LanceDBPerformanceConfig,
+        CaseType.Performance10M99P: LanceDBPerformanceConfig,
+        CaseType.Performance1M99P: LanceDBPerformanceConfig,
+        CaseType.Performance1536D5M: LanceDBPerformanceConfig,
+        CaseType.Performance1536D500K: LanceDBPerformanceConfig,
+        CaseType.Performance1536D5M1P: LanceDBPerformanceConfig,
+        CaseType.Performance1536D500K1P: LanceDBPerformanceConfig,
+        CaseType.Performance1536D5M99P: LanceDBPerformanceConfig,
+        CaseType.Performance1536D500K99P: LanceDBPerformanceConfig,
+    },
+    DB.LanceDBCloud: {
+        CaseType.CapacityDim960: LanceDBCloudLoadingConfig,
+        CaseType.CapacityDim128: LanceDBCloudLoadingConfig,
+        CaseType.Performance100M: LanceDBCloudPerformanceConfig,
+        CaseType.Performance10M: LanceDBCloudPerformanceConfig,
+        CaseType.Performance1M: LanceDBCloudPerformanceConfig,
+        CaseType.Performance10M1P: LanceDBCloudPerformanceConfig,
+        CaseType.Performance1M1P: LanceDBCloudPerformanceConfig,
+        CaseType.Performance10M99P: LanceDBCloudPerformanceConfig,
+        CaseType.Performance1M99P: LanceDBCloudPerformanceConfig,
+        CaseType.Performance1536D5M: LanceDBCloudPerformanceConfig,
+        CaseType.Performance1536D500K: LanceDBCloudPerformanceConfig,
+        CaseType.Performance1536D5M1P: LanceDBCloudPerformanceConfig,
+        CaseType.Performance1536D500K1P: LanceDBCloudPerformanceConfig,
+        CaseType.Performance1536D5M99P: LanceDBCloudPerformanceConfig,
+        CaseType.Performance1536D500K99P: LanceDBCloudPerformanceConfig,
     },
 }

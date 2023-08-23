@@ -32,7 +32,8 @@ class DB(Enum):
     PgVectoRS = "PgVectoRS"
     Redis = "Redis"
     Chroma = "Chroma"
-
+    LanceDB = "LanceDB"
+    LanceDBCloud = "LanceDBCloud"
 
     @property
     def init_cls(self) -> Type[VectorDB]:
@@ -77,6 +78,14 @@ class DB(Enum):
             from .chroma.chroma import ChromaClient
             return ChromaClient
 
+        if self == DB.LanceDB:
+            from .lancedb.lancedb import LanceDB
+            return LanceDB
+        
+        if self == DB.LanceDBCloud:
+            from .lancedb_cloud.lancedb_cloud import LanceDBCloud
+            return LanceDBCloud
+
     @property
     def config_cls(self) -> Type[DBConfig]:
         """Import while in use"""
@@ -119,6 +128,14 @@ class DB(Enum):
         if self == DB.Chroma:
             from .chroma.config import ChromaConfig
             return ChromaConfig
+        
+        if self == DB.LanceDB:
+            from .lancedb.config import LanceDBConfig
+            return LanceDBConfig
+        
+        if self == DB.LanceDBCloud:
+            from .lancedb_cloud.config import LanceDBCloudConfig
+            return LanceDBCloudConfig
 
     def case_config_cls(self, index_type: IndexType | None = None) -> Type[DBCaseConfig]:
         if self == DB.Milvus:
@@ -148,6 +165,14 @@ class DB(Enum):
         if self == DB.PgVectoRS:
             from .pgvecto_rs.config import _pgvecto_rs_case_config
             return _pgvecto_rs_case_config.get(index_type)
+
+        if self == DB.LanceDB:
+            from .lancedb.config import LanceDBIndexConfig
+            return LanceDBIndexConfig
+        
+        if self == DB.LanceDBCloud:
+            from .lancedb_cloud.config import LanceDBCloudIndexConfig
+            return LanceDBCloudIndexConfig
 
         # DB.Pinecone, DB.Chroma, DB.Redis
         return EmptyDBCaseConfig
