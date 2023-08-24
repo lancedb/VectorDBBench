@@ -60,6 +60,7 @@ COLOR_MAP = {
     DB.QdrantCloud.value: "#D91AD9",
     DB.WeaviateCloud.value: "#20C997",
     DB.PgVector.value: "#4C779A",
+    DB.Redis.value: "#0D6EFD",
     DB.LanceDB.value: "#615eff",
     DB.LanceDBCloud.value: "#615eff",
 }
