@@ -77,7 +77,15 @@ class LanceDB(VectorDB):
     def optimize(self):
         assert self.tbl is not None
         print(self.case_config.index_param().get('metric'))
-        self.tbl.create_index(self.case_config.index_param().get('metric'), num_partitions=self.case_config.index_param().get('num_partitions'), num_sub_vectors=self.case_config.index_param().get('num_sub_vectors'))
+        print(self.case_config.index_param().get('num_partitions'))
+        print(self.case_config.index_param().get('num_sub_vectors'))
+        print(self.case_config.index_param())
+        self.tbl.create_index(
+            # self.case_config.index_param().get('metric'),
+            num_partitions=self.case_config.index_param().get('num_partitions'),
+            # num_sub_vectors=self.case_config.index_param().get('num_sub_vectors')
+            num_sub_vectors=4
+        )
 
     def ready_to_search(self):
         pass
@@ -124,6 +132,7 @@ class LanceDB(VectorDB):
         Returns:
             list[int]: list of k most similar embeddings IDs to the query embedding.
         """
+        print("k = " + str(k))
         if filters:
             expr = f"{self._scalar_field} {filters.get('metadata')}"
             res = self.tbl \
@@ -137,8 +146,14 @@ class LanceDB(VectorDB):
             res = self.tbl \
                 .search(query) \
                 .metric(self.case_config.search_param().get('metric')) \
-                .nprobes(self.case_config.search_param().get('nprobes')) \
-                .refine_factor(self.case_config.search_param().get('refine_factor')) \
+                .nprobes(
+                    1
+                    # self.case_config.search_param().get('nprobes')
+                ) \
+                .refine_factor(
+                    1
+                    # self.case_config.search_param().get('refine_factor')
+                ) \
                 .limit(k) \
                 .select([self._scalar_field]) \
                 .to_arrow()

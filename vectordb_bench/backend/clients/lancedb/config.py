@@ -33,8 +33,9 @@ class LanceDBIndexConfig(BaseModel, DBCaseConfig):
             "metric": self.parse_metric(),
             "nprobes": self.nprobes,
             "refine_factor": self.refine_factor,
-        }from pydantic import BaseModel, SecretStr
-from ..api import DBConfig, DBCaseConfig, MetricType
+        }
+#         from pydantic import BaseModel, SecretStr
+# from ..api import DBConfig, DBCaseConfig, MetricType
 
 class LanceDBConfig(DBConfig):
     uri: SecretStr = "data/vector-lancedb"
